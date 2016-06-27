@@ -11,6 +11,9 @@ MANIFEST.MF
 .idea
 nb-configuration.xml
 *.versionsBackup
+.settings
+.project
+.classpath
 
 build/
 .gradle/
@@ -25,3 +28,4 @@ lib
 build.xml
 pom_new.xml
 verify.png
+qrcode.png

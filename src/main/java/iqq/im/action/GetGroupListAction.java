@@ -1,19 +1,18 @@
-/**
- * 
- */
+
 package iqq.im.action;
 
 import iqq.im.QQActionListener;
 import iqq.im.QQException;
+import iqq.im.bean.QQAccount;
 import iqq.im.bean.QQGroup;
-import iqq.im.core.QQConstants;
-import iqq.im.core.QQContext;
-import iqq.im.core.QQSession;
-import iqq.im.core.QQStore;
+import iqq.im.core.*;
 import iqq.im.event.QQActionEvent;
+import iqq.im.http.QQHttpCookie;
 import iqq.im.http.QQHttpRequest;
 import iqq.im.http.QQHttpResponse;
 
+import iqq.im.service.HttpService;
+import iqq.im.util.QQEncryptor;
 import org.slf4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,23 +21,34 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 获取群列表名称
- * 
+ *
  * @author ChenZhiHui
- * @create-date 2013-2-21
+ * @since 2013-2-21
  */
 public class GetGroupListAction extends AbstractHttpAction {
 	private static final Logger LOG = LoggerFactory.getLogger(GetGroupListAction.class);
 
+	/**
+	 * <p>Constructor for GetGroupListAction.</p>
+	 *
+	 * @param context a {@link iqq.im.core.QQContext} object.
+	 * @param listener a {@link iqq.im.QQActionListener} object.
+	 */
 	public GetGroupListAction(QQContext context, QQActionListener listener) {
 		super(context, listener);
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public QQHttpRequest onBuildRequest() throws QQException, JSONException {
+        HttpService httpService = (HttpService) getContext().getSerivce(QQService.Type.HTTP);
+        QQHttpCookie ptwebqq = httpService.getCookie("ptwebqq", QQConstants.URL_GET_USER_CATEGORIES);
 		QQSession session = getContext().getSession();
+        QQAccount account = getContext().getAccount();
 
 		JSONObject json = new JSONObject();
-		json.put("vfwebqq", session.getVfwebqq()); 
+		json.put("vfwebqq", session.getVfwebqq());
+        json.put("hash", QQEncryptor.hash(account.getUin() + "", ptwebqq.getValue()));
 
 		QQHttpRequest req = createHttpRequest("POST",
 				QQConstants.URL_GET_GROUP_NAME_LIST);
@@ -49,6 +59,7 @@ public class GetGroupListAction extends AbstractHttpAction {
 		return req;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	protected void onHttpStatusOK(QQHttpResponse response) throws QQException,
 			JSONException {

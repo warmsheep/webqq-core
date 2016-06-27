@@ -26,23 +26,46 @@
 package iqq.im.module;
 
 import iqq.im.QQActionListener;
+import iqq.im.action.AcceptBuddyAddAction;
 import iqq.im.action.GetOnlineFriendAction;
 import iqq.im.action.GetRecentListAction;
 import iqq.im.event.QQActionFuture;
 
 /**
- * 
+ *
  * 好友信息处理模块
- * 
- * @author solosky <solosky772@qq.com>
- * 
+ *
+ * @author solosky
  */
 public class BuddyModule extends AbstractModule {
+	/**
+	 * <p>getOnlineBuddy.</p>
+	 *
+	 * @param listener a {@link iqq.im.QQActionListener} object.
+	 * @return a {@link iqq.im.event.QQActionFuture} object.
+	 */
 	public QQActionFuture getOnlineBuddy(QQActionListener listener) {
 		return pushHttpAction(new GetOnlineFriendAction(getContext(), listener));
 	}
 	
+	/**
+	 * <p>getRecentList.</p>
+	 *
+	 * @param listener a {@link iqq.im.QQActionListener} object.
+	 * @return a {@link iqq.im.event.QQActionFuture} object.
+	 */
 	public QQActionFuture getRecentList(QQActionListener listener){
 		return pushHttpAction(new GetRecentListAction(getContext(), listener));
+	}
+	
+	/**
+	 * <p>addBuddy.</p>
+	 *
+	 * @param account target qq
+	 * @param listener a {@link iqq.im.QQActionListener} object.
+	 * @return a {@link iqq.im.event.QQActionFuture} object.
+	 */
+	public QQActionFuture addBuddy(QQActionListener listener, String account){
+		return pushHttpAction(new AcceptBuddyAddAction(getContext(), listener,account));
 	}
 }

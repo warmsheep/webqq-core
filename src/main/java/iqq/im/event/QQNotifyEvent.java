@@ -27,23 +27,38 @@ package iqq.im.event;
 
 
 /**
+ * <p>QQNotifyEvent class.</p>
  *
- *
- * @author solosky <solosky772@qq.com>
- *
+ * @author solosky
  */
 public class QQNotifyEvent extends QQEvent{
 	private Type type;
 	private Object target;
 	
+	/**
+	 * <p>Constructor for QQNotifyEvent.</p>
+	 *
+	 * @param type a {@link iqq.im.event.QQNotifyEvent.Type} object.
+	 * @param target a {@link java.lang.Object} object.
+	 */
 	public QQNotifyEvent(Type type, Object target) {
 		this.type = type;
 		this.target = target;
 	}
 	
+	/**
+	 * <p>Getter for the field <code>type</code>.</p>
+	 *
+	 * @return a {@link iqq.im.event.QQNotifyEvent.Type} object.
+	 */
 	public Type getType() {
 		return type;
 	}
+	/**
+	 * <p>Getter for the field <code>target</code>.</p>
+	 *
+	 * @return a {@link java.lang.Object} object.
+	 */
 	public Object getTarget() {
 		return target;
 	}
@@ -65,7 +80,7 @@ public class QQNotifyEvent extends QQEvent{
 		CHAT_MSG,
 		/**好友通知，如其他人请求添加好友，添加其他用户请求通过或者拒绝*/
 		BUDDY_NOTIFY,
-		/**群通知，如管理员通过或拒绝了添加群请求，群成员退出等*/
+		/**群通知，如管理员通过或拒绝了添加群请求，群成员退出，群文件共享，被管理员踢出等*/
 		GROUP_NOTIFY,
 		/**文件传输通知，如对方请求发送文件，对方已同意接受文件等*/
 		FILE_NOTIFY,
@@ -80,10 +95,11 @@ public class QQNotifyEvent extends QQEvent{
 		/**新邮件通知*/
 		EMAIL_NOTIFY,
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
+	/** {@inheritDoc} */
 	@Override
 	public String toString() {
 		return "QQNotifyEvent [type=" + type + ", target=" + target + "]";
